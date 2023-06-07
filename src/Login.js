@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Countries from './Components/Countries';
 import Box from './Components/Box';
-import { API_URL } from '../constants';
+import { API_URL } from './constants';
 
 const Login = ({ user }) => {
   // Tabs

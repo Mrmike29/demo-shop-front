@@ -4,7 +4,7 @@ import Box from './Components/Box';
 import Modal from './Components/Modal';
 import Table from './Components/Table';
 import { AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai';
-import { API_URL } from '../constants';
+import { API_URL } from './constants';
 
 const CompanyApp = ({ user }) => {
   // Table data
