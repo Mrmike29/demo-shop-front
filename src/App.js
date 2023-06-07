@@ -11,17 +11,21 @@ import './App.css';
 
 
 const MainApp = () => {
+  // Variable for handle changing view
   const [page, setPage] = useState(() => {
     const { pathname } = window.location;
     const page = pathname.slice(1)
     return page;
   });
   
+  // Variables for cart modal component
   const [isModalCartOpen, setIsModalCartOpen] = useState(false);
   const [bodyCart, setBodyCart] = useState('');
 
+  // Variable for handle user and cart data
   const win = window.sessionStorage
 
+  // Handle which view should be selected
   const getPage = () => {
     if (win.getItem('user') === null && page !== '') { 
       window.location.href = window.location.origin; 
@@ -46,15 +50,18 @@ const MainApp = () => {
     }
   }
 
+  // Set new value to page variable
   const goToPage = page => () => {
     setPage(page)
   }
 
+  // Removes user from sessionStorage and returns to login page
   const handleSignOut = () => {
     win.removeItem('user')
     window.location.href = window.location.origin; 
   }
 
+  // Remove 1 item from the cart
   const removeFromCart = (key) => {
     const currentCart = JSON.parse(win.getItem('cart'));
     delete currentCart[key];
@@ -62,12 +69,14 @@ const MainApp = () => {
     openCartModal();
   }
 
+  // Creates an order with the products from the cart
   const orderProducts = () => {
     closeCartModal();
     win.setItem('cart', JSON.stringify([]));
     alert('Products Orderd');
   }
 
+  // Opens the cart modal and sets data from sessionStorage
   const openCartModal = () => {
     const currentCart = JSON.parse(win.getItem('cart'));
 
@@ -111,14 +120,16 @@ const MainApp = () => {
       </div>
     )
 
-
     setIsModalCartOpen(true);
   }
 
+  // Close the cart modal
   const closeCartModal = () => {
     setIsModalCartOpen(false);
   };
 
+  // Returns main component with header, body and footer integrated
+  // Here is where every view is shown
   return (
     <BrowserRouter>
       <div className="app">

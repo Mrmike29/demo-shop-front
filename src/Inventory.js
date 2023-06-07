@@ -4,18 +4,20 @@ import Table from './Components/Table';
 import { AiOutlineCloudDownload, AiOutlineMail } from 'react-icons/ai';
 import { API_URL } from './constants';
 
-// our components
-
 const InventoryApp = ({ user }) => {
   // Table data
   const [data, setData] = useState([]);
   const [body, setBody] = useState([]);
+
+  // Pdf variable
   const [pdfDoc, setPdfDoc] = useState([]);
 
+  // Execute fetchData function
   useEffect(() => {
     fetchData();
   }, []);
 
+  // Styles for PDF
   const styles = StyleSheet.create({
     page: {
       display: 'flex',
@@ -75,6 +77,7 @@ const InventoryApp = ({ user }) => {
     },
   });
 
+  // Creates table data and PDF body from requested data
   const fetchData = async () => {
     try {
       fetch(`${API_URL}/getInventory`).then((response) => {
@@ -144,6 +147,7 @@ const InventoryApp = ({ user }) => {
     }
   };
 
+  // Headers for table
   const headers = [
     {'name': 'Name'},
     {'name': 'Company'},
@@ -151,10 +155,12 @@ const InventoryApp = ({ user }) => {
     {'name': 'Stock'},
   ];
 
+  // Creates PDF and sends to email
   const generatePDF = () => {
-
+    // Turns pdf component into blob
     const blobPromise = pdf(pdfDoc).toBlob();
 
+    // Send blob to backend for sending email
     blobPromise.then((blob) => {
       try {
         const formData = new FormData();
@@ -174,13 +180,10 @@ const InventoryApp = ({ user }) => {
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    });
-    // Convert the PDF document to a data URL
-    // const dataUrl = URL.createObjectURL(dfd);
-
-    
+    });    
   };
 
+  // Returns Inventory component with data, table and the other elements integrated
   return (
     <div>
       <div className='table-container'>
@@ -189,6 +192,7 @@ const InventoryApp = ({ user }) => {
           <div style={{display: 'flex'}}>
             <button className="open-button">
               <AiOutlineCloudDownload />
+              {/* Component for PDF download */}
               <PDFDownloadLink document={pdfDoc} fileName="inventary.pdf">
                 {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download')}
               </PDFDownloadLink>

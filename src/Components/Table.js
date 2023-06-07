@@ -1,6 +1,8 @@
 import React from 'react';
 
+// Table to show data
 function Table({ data, headers, body }) {
+  // Returns table component with headers and body integrated
   return (
     <div>
       <table className='table'>

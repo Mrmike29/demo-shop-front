@@ -11,7 +11,7 @@ const CompanyApp = ({ user }) => {
   const [data, setData] = useState([]);
   const [body, setBody] = useState([]);
 
-  // Modal
+  // Modal for company creation
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Create company data
@@ -22,21 +22,24 @@ const CompanyApp = ({ user }) => {
   const [addressComp, setAddressComp] = useState('');
   const [phoneComp, setPhoneComp] = useState('');
 
+  // Opens modal for company creation
   const openModal = () => {
     setIsModalOpen(true);
   };
-
+  
+  // Opens modal
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
+  // Execute fetchData function
   useEffect(() => {
     fetchData();
   }, []);
 
+  // Delete company from DB
   const handleDelete = (id) => {
     try {
-
       fetch(`${API_URL}/deleteCompany`, {
         method: 'put',
         body: JSON.stringify({
@@ -57,6 +60,7 @@ const CompanyApp = ({ user }) => {
     }
   };
 
+  // Execute request to get companies and set result to data varible
   const fetchData = async () => {
     try {
       fetch(`${API_URL}/getCompanies`).then((response) => {
@@ -91,6 +95,7 @@ const CompanyApp = ({ user }) => {
     }
   };
 
+  // Sends modal data and creates new company
   const handleSubmitCompany = (e) => {
     e.preventDefault();
 
@@ -122,6 +127,7 @@ const CompanyApp = ({ user }) => {
     }
   };
 
+  // Creates form component for company creation
   const boxBody = <form onSubmit={handleSubmitCompany}>
       <div className='input-container'>
         <label>Country</label>
@@ -152,6 +158,7 @@ const CompanyApp = ({ user }) => {
       </div>
     </form>
 
+  // Headers for table
   const headers = [
     {'name': 'NIT'},
     {'name': 'DV'},
@@ -161,10 +168,12 @@ const CompanyApp = ({ user }) => {
     {'name': 'Phone'},
   ];
 
+  // Validates user type for permissions
   if (user.getItem('rol')*1 === 1) {
     headers.push({'name': 'Actions'});
   }
 
+  // Returns Company component with modal, table and the other elements integrated
   return (
     <div>
       <div className='table-container'>

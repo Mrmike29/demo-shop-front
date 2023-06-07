@@ -20,10 +20,12 @@ const Login = ({ user }) => {
   const [passwordSU, setPasswordSU] = useState('');
   const [confirmPasswordSU, setConfirmPasswordSU] = useState('');
 
+  // Handle tab changing
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
 
+  // Gets data from sign in form, validates in DB and log into the app
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -52,6 +54,7 @@ const Login = ({ user }) => {
     }
   };
 
+  // Gets data from creation form, creates new user and log into the app
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
 
@@ -93,6 +96,7 @@ const Login = ({ user }) => {
     }
   };
 
+  // Tabs component for handler action
   const tabs = [
     {
       title: 'Sign In',
@@ -148,6 +152,7 @@ const Login = ({ user }) => {
     },
   ];
 
+  // Returns Login component with tabs and the other elements integrated
   return (
     <div>
       <Box 

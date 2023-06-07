@@ -12,7 +12,7 @@ const ProductApp = ({ user }) => {
   const [data, setData] = useState([]);
   const [body, setBody] = useState([]);
 
-  // Modal
+  // Modal for add to cart
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOrderOpen, setIsModalOrderOpen] = useState(false);
   const [idCart, setidCart] = useState(0);
@@ -33,11 +33,12 @@ const ProductApp = ({ user }) => {
   const [stockProd, setStockProd] = useState(1);
   const [priceProd, setPriceProd] = useState(1);
 
+  // Execute fetchData function
   useEffect(() => {
     fetchData();
   }, []);
 
-  // Products List
+  // Headers for table
   const headers = [
     {'name': 'Name'},
     {'name': 'Category'},
@@ -49,6 +50,7 @@ const ProductApp = ({ user }) => {
     {'name': 'Actions'},
   ];
 
+  // Delete product from DB
   const handleDelete = (id) => {
     try {
 
@@ -72,6 +74,7 @@ const ProductApp = ({ user }) => {
     }
   };
 
+  // Execute request to get products and set result to data varible
   const fetchData = async () => {
     try {
       fetch(`${API_URL}/getProducts`).then((response) => {
@@ -115,16 +118,17 @@ const ProductApp = ({ user }) => {
     }
   };
 
-
-  // Create Product
+  // Opens modal creation
   const openModal = () => {
     setIsModalOpen(true);
   };
 
+  // Close modal creation
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
+  // Gets product data and creates new product
   const handleSubmitProduct = (e) => {
     e.preventDefault();
 
@@ -166,6 +170,7 @@ const ProductApp = ({ user }) => {
     }
   };
 
+  // Creates form component for product creation
   const boxBody = <form onSubmit={handleSubmitProduct}>
       <div className='input-container'>
         <label>Company</label>
@@ -196,8 +201,7 @@ const ProductApp = ({ user }) => {
       </div>
     </form>
 
-
-  // Add to Cart
+  // Add product to Cart
   const handleSetCart = (id, nameP, currency, price, quan) => {
     const currentCart = JSON.parse(user.getItem('cart'));
     currentCart.push({id, nameP, currency, price, quan});
@@ -207,6 +211,7 @@ const ProductApp = ({ user }) => {
     setQuantity(1);
   }
 
+  // Opens cart modal with product data
   const openOrderModal = (id) => {
     try {
       fetch(`${API_URL}/getProducts?id=${id}`).then((response) => {
@@ -227,15 +232,19 @@ const ProductApp = ({ user }) => {
     setIsModalOrderOpen(true);
   };
 
+  // Close cart modal
   const closeOrderModal = () => {
     setIsModalOrderOpen(false);
   };
 
+  // Handle currency select changes
   const handleSelectCurrency = async (e) => {
     setCurrencyCartTo(e.target.value)
     changeCurrency(e.target.value)
   }
 
+  // Coverts currency for cart
+  // cCT: changeCurrencyTo
   const changeCurrency = (cCT) => {
     try {
       fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currencyCartFrom.toLowerCase()}.json`).then((response) => {
@@ -248,6 +257,7 @@ const ProductApp = ({ user }) => {
     }
   }
 
+  // Creates form component for cart addition
   const bodyCart = <form onSubmit={(e) => {e.preventDefault()}}>
     <div className='input-container'>
       <label>Company</label>
@@ -282,6 +292,7 @@ const ProductApp = ({ user }) => {
     </div>
   </form>
 
+  // Returns Product component with modal, table, Box and the other elements integrated
   return (
     <div>
       <div className='table-container'>
