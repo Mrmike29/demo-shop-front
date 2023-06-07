@@ -303,7 +303,9 @@ const ProductApp = ({ user, reRender, setReRender }) => {
       <div className='table-container'>
         <div className='table-container-header'>
           <h1>Products</h1>
-          <button onClick={openModal} className="open-button"><AiOutlinePlus />Create</button>
+          {(user.getItem('rol')*1 === 1 &&
+            <button onClick={openModal} className="open-button"><AiOutlinePlus />Create</button>
+          )}
         </div>
         <Modal isOpen={isModalOrderOpen} onClose={closeOrderModal}>
           <Box header={<h1>Add to Cart</h1>} body={bodyCart}/>
