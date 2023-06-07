@@ -4,6 +4,7 @@ import Box from './Components/Box';
 import Modal from './Components/Modal';
 import Table from './Components/Table';
 import { AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai';
+import { API_URL } from '../constants';
 
 const CompanyApp = ({ user }) => {
   // Table data
@@ -36,7 +37,7 @@ const CompanyApp = ({ user }) => {
   const handleDelete = (id) => {
     try {
 
-      fetch('http://localhost:8000/deleteCompany', {
+      fetch(`${API_URL}/deleteCompany`, {
         method: 'put',
         body: JSON.stringify({
           'NIT': id,
@@ -58,7 +59,7 @@ const CompanyApp = ({ user }) => {
 
   const fetchData = async () => {
     try {
-      fetch('http://localhost:8000/getCompanies').then((response) => {
+      fetch(`${API_URL}/getCompanies`).then((response) => {
   			response.json().then((jsonResponse) => {
           (jsonResponse.length > 0) ? 
           setBody(jsonResponse.map((item) => (
@@ -95,7 +96,7 @@ const CompanyApp = ({ user }) => {
 
     try {
 
-      fetch('http://localhost:8000/createCompany', {
+      fetch(`${API_URL}/createCompany`, {
         method: 'post',
         body: JSON.stringify({
           'country': countryComp,

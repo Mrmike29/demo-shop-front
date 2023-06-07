@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../constants';
 
 function Countries({ setValue }) {
   const [countries, setCountries] = useState([]);
@@ -15,7 +16,7 @@ function Countries({ setValue }) {
   
   const fetchData = async () => {
     try {
-      fetch('http://localhost:8000/getCountries').then((response) => {
+      fetch(`${API_URL}/getCountries`).then((response) => {
         response.json().then((jsonResponse) => {
           setCountries(jsonResponse);
         })

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../constants';
 
 function Companies({ setValue }) {
   const [companies, setCompanies] = useState([]);
@@ -15,7 +16,7 @@ function Companies({ setValue }) {
   
   const fetchData = async () => {
     try {
-      fetch('http://localhost:8000/getCompanies').then((response) => {
+      fetch(`${API_URL}/getCompanies`).then((response) => {
         response.json().then((jsonResponse) => {
             setCompanies(jsonResponse);
         })

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from './Components/Table';
 import { AiOutlineMail } from 'react-icons/ai';
+import { API_URL } from '../constants';
 
 // our components
 
@@ -15,7 +16,7 @@ const InventoryApp = ({ user }) => {
 
   const fetchData = async () => {
     try {
-      fetch('http://localhost:8000/getInventory').then((response) => {
+      fetch(`${API_URL}/getInventory`).then((response) => {
   			response.json().then((jsonResponse) => {
           (jsonResponse.length > 0) ? 
           setBody(jsonResponse.map((item) => (

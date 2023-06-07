@@ -5,6 +5,7 @@ import Box from './Components/Box';
 import Modal from './Components/Modal';
 import Table from './Components/Table';
 import { AiOutlinePlus, AiOutlineDelete, AiOutlineShoppingCart } from 'react-icons/ai';
+import { API_URL } from '../constants';
 
 const ProductApp = ({ user }) => {
   // Table data
@@ -51,7 +52,7 @@ const ProductApp = ({ user }) => {
   const handleDelete = (id) => {
     try {
 
-      fetch('http://localhost:8000/deleteProduct', {
+      fetch(`${API_URL}/deleteProduct`, {
         method: 'put',
         body: JSON.stringify({
           'id': id,
@@ -73,7 +74,7 @@ const ProductApp = ({ user }) => {
 
   const fetchData = async () => {
     try {
-      fetch('http://localhost:8000/getProducts').then((response) => {
+      fetch(`${API_URL}/getProducts`).then((response) => {
   			response.json().then((jsonResponse) => {
           (jsonResponse.length > 0) ? 
           setBody(jsonResponse.map((item) => (
@@ -139,7 +140,7 @@ const ProductApp = ({ user }) => {
 
     try {
 
-      fetch('http://localhost:8000/createProduct', {
+      fetch(`${API_URL}/createProduct`, {
         method: 'post',
         body: JSON.stringify({
           'company': companyProd,
@@ -208,7 +209,7 @@ const ProductApp = ({ user }) => {
 
   const openOrderModal = (id) => {
     try {
-      fetch(`http://localhost:8000/getProducts?id=${id}`).then((response) => {
+      fetch(`${API_URL}/getProducts?id=${id}`).then((response) => {
   			response.json().then((jsonResponse) => {
           setidCart(id);
           setCompanyCart(jsonResponse[0].company);

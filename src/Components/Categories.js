@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../constants';
 
 function Categories({ setValue }) {
   const [categories, setCategories] = useState([]);
@@ -15,7 +16,7 @@ function Categories({ setValue }) {
   
   const fetchData = async () => {
     try {
-      fetch('http://localhost:8000/getCategories').then((response) => {
+      fetch(`${API_URL}/getCategories`).then((response) => {
         response.json().then((jsonResponse) => {
           setCategories(jsonResponse);
         })

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Countries from './Components/Countries';
 import Box from './Components/Box';
+import { API_URL } from '../constants';
 
 const Login = ({ user }) => {
   // Tabs
@@ -27,7 +28,7 @@ const Login = ({ user }) => {
     e.preventDefault();
 
     try {
-      fetch(`http://localhost:8000/signin?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
+      fetch(`${API_URL}/signin?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
         method: "GET",
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
@@ -65,7 +66,7 @@ const Login = ({ user }) => {
         return
       }
 
-      fetch('http://localhost:8000/signup', {
+      fetch(`${API_URL}/signup`, {
         method: 'post',
         body: JSON.stringify({
           'country': countrySU,
