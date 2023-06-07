@@ -10,11 +10,14 @@ const InventoryApp = ({ user }) => {
   const [body, setBody] = useState([]);
 
   // Pdf variable
+  const [count, setCount] = useState(0);
   const [pdfDoc, setPdfDoc] = useState([]);
 
   // Execute fetchData function
   useEffect(() => {
-    fetchData();
+    if (count < 3) {
+      fetchData();
+    }
   }, [pdfDoc]);
 
   // Styles for PDF
@@ -78,7 +81,8 @@ const InventoryApp = ({ user }) => {
   });
 
   // Creates table data and PDF body from requested data
-  const fetchData = async () => {
+  const fetchData = async () => {    
+    setCount(count + 1);
     try {
       fetch(`${API_URL}/getInventory`).then((response) => {
   			response.json().then((jsonResponse) => {
@@ -170,10 +174,8 @@ const InventoryApp = ({ user }) => {
           method: 'post',
           mode: 'no-cors',
           body: formData,
-        }).then(
-          (response) => response.json()
-        ).then((data) => {
-          console.log(data)
+        }).then((response) => {
+          alert("Email Send")
         }).catch((err) => {
           console.log(err.message);
         });
