@@ -7,7 +7,6 @@ Update URL constant to your localhost.
 
 Execute following commands.
 ### `npm i`
-### `npm run build`
 ### `npm start`
 
 
