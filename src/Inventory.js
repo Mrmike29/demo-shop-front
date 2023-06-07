@@ -15,7 +15,7 @@ const InventoryApp = ({ user }) => {
   // Execute fetchData function
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pdfDoc]);
 
   // Styles for PDF
   const styles = StyleSheet.create({
