@@ -1,38 +1,291 @@
-.App {
+.app {
   text-align: center;
+  margin: 0 auto;
+  max-width: 90%;
+  height: 90vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+.app-header {
   background-color: #282c34;
-  min-height: 100vh;
+  padding: 20px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-header-routes {
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.app-header-routes > a {
+  color: white;
+  font-weight: bold;
+  font-size: large;
+}
+
+.app-content {
+  height: 90%;
+}
+
+.app-content > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 90%;
+  align-items: center;
+}
+
+.app-box {
+  width: 20%;
+  height: 75%;
+  border: 2px solid #282c34;
+}
+
+.box-header {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: #282c34;
+}
+
+.box-header > button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  color: white;
+  cursor: pointer;
+  background: transparent;
+}
+
+.box-header > button.active {
+  color: #282c34;
+  background: white;
+}
+
+.box-body {
+  width: 100%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-body > form {
+  overflow-y: auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.input-container {
+  width: 70%;
+  margin: 30px 0;
+}
+
+.input-container > label {
+  font-size: large;
+  font-weight: bold;
+}
+
+.input-container > button {
+  cursor: pointer;
+  height: 35px;
+  width: 65px;
+  color: white;
+  background: #282c34;
+  border: 1px solid white;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 4px;
+  width: 20%;
+  height: 70%;
+}
+
+.modal > .app-box {
+  width: 100%;
+  height: 100%;
+}
+
+.open-button {
+  cursor: pointer;
+  height: 35px;
+  width: auto;
+  color: white;
+  margin: 20px 10px;
+  background: #282c34;
+  border: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  height: 35px;
+  width: 35px;
+  color: white;
+  margin: 20px 10px;
+  background: #282c34;
+  border: none;
+}
+
+.table-container {
+  width: 90%;
+}
+
+.table-container-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table {
+  width: 100%;
+  border: 2px solid #282c34;
+}
+
+.table-head {
+  color: white;
+  font-weight: bold;
+  background: #282c34;
+}
+
+.cart {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cart-footer {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-list {
+  width: 95%;
+  height: 90%;
+  overflow-y: auto;
+}
+
+.mini-list-item {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  margin: 10px 0;
+  background: #282c34;
+}
+
+.item-product {
+  display: flex;
+  width: 100%;
+}
+
+.item-product-info {
+  width: 90%;
+}
+
+.item-name {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.item-data {
+  display: flex;
+  justify-content: space-between;
+  height: 50%;
+  align-items: center;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.item-data-container {
+  width: 33%;
+  margin: 0 5px;
+  display: flex;
+  justify-content: space-between;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.item-data-title {
+  font-weight: bold;
+}
+
+.item-product-actions{
+  width: 10%;
+}
+
+.actions-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions-container > button {
+  width: 25px;
+  height: 25px;
+  border: none;
+  cursor: pointer;
+  background: white;
+}
+
+.app-footer {
+  background-color: #282c34;
+  padding: 10px;
+  color: white;
+}
+
+input,
+select {
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+h2 {
+  margin-bottom: 0;
+}
+
+td:last-child {
+  display: flex;
+  justify-content: center;
 }
