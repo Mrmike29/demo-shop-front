@@ -4,9 +4,11 @@ import { AiTwotoneShop, AiOutlineMinus } from 'react-icons/ai';
 import InventoryApp from './Inventory';
 import CompanyApp from './Company';
 import ProductApp from './Product';
+import OrderApp from './Order';
 import Login from './Login';
 import Modal from './Components/Modal';
 import Box from './Components/Box';
+import { API_URL } from './constants';
 import './App.css';
 
 
@@ -21,6 +23,9 @@ const MainApp = () => {
   // Variables for cart modal component
   const [isModalCartOpen, setIsModalCartOpen] = useState(false);
   const [bodyCart, setBodyCart] = useState('');
+
+  // Products re-render
+  const [reRender, setReRender] = useState(false);
 
   // Variable for handle user and cart data
   const win = window.sessionStorage
@@ -44,7 +49,9 @@ const MainApp = () => {
       case 'companies':
         return <CompanyApp user={win}/>
       case 'products':
-        return <ProductApp user={win}/>
+        return <ProductApp user={win} reRender={reRender} setReRender={setReRender}/>
+      case 'orders':
+        return <OrderApp user={win}/>
       default:
         break;
     }
@@ -67,10 +74,47 @@ const MainApp = () => {
     delete currentCart[key];
     win.setItem('cart', JSON.stringify(currentCart));
     openCartModal();
+    setReRender(true);
   }
 
   // Creates an order with the products from the cart
   const orderProducts = () => {
+    let validation = false;
+    const currentCart = JSON.parse(win.getItem('cart'));
+
+    currentCart.map((item, key) => {
+      if (item !== null) {
+        validation = true;
+      }
+    })
+
+    if (!validation) {
+      alert('Nothing to order');
+      return
+    }
+  
+    try {
+      fetch(`${API_URL}/createOrder`, {
+        method: 'post',
+        body: JSON.stringify({
+          'idUser': win.getItem('user'),
+          'cartData': win.getItem('cart')
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }).then(
+        (response) => response.json()
+      ).then((data) => {
+        if (page === 'products') {
+          setReRender(true);
+        }
+      }).catch((err) => {
+        console.log(err.message);
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
     closeCartModal();
     win.setItem('cart', JSON.stringify([]));
     alert('Products Orderd');
@@ -139,6 +183,9 @@ const MainApp = () => {
             { win.getItem('user') !== null && <>
                 <Link to='/products' onClick={goToPage('products')}>
                   Products
+                </Link>
+                <Link to='/orders' onClick={goToPage('orders')}>
+                  Orders
                 </Link>
                 <Link to='/companies' onClick={goToPage('companies')}>
                     Companies

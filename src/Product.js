@@ -7,7 +7,7 @@ import Table from './Components/Table';
 import { AiOutlinePlus, AiOutlineDelete, AiOutlineShoppingCart } from 'react-icons/ai';
 import { API_URL } from './constants';
 
-const ProductApp = ({ user }) => {
+const ProductApp = ({ user, reRender, setReRender }) => {
   // Table data
   const [data, setData] = useState([]);
   const [body, setBody] = useState([]);
@@ -100,8 +100,7 @@ const ProductApp = ({ user }) => {
                   {(user.getItem('rol')*1 === 1)? 
                     <button className="open-button" onClick={() =>handleDelete(item.id)}> <AiOutlineDelete /> Delete</button>: <></>
                   }
-                </td> 
-                
+                </td>
               </tr>
             )))
           : 
@@ -117,6 +116,11 @@ const ProductApp = ({ user }) => {
       console.error('Error fetching data:', error);
     }
   };
+
+  if (reRender) {
+    fetchData();
+    setReRender(false);
+  }
 
   // Opens modal creation
   const openModal = () => {
@@ -207,6 +211,7 @@ const ProductApp = ({ user }) => {
     currentCart.push({id, nameP, currency, price, quan});
     user.setItem('cart', JSON.stringify(currentCart));
 
+    fetchData();
     closeOrderModal();
     setQuantity(1);
   }
