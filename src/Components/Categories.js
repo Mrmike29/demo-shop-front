@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Multiselect from './Multiselect';
 import { API_URL } from '../constants';
 
 function Categories({ setValue }) {
@@ -33,12 +34,14 @@ function Categories({ setValue }) {
 
   // Create select component to choose category from categories variable
   return (
-    <select value={selectedOption} onChange={handleSelectChange}>
-      <option key={0} value={0}>Select Category</option>
-      {categories.map((item) => (
-        <option key={item.id} value={item.id}>{ item.name }</option>
-      ))}
-    </select>
+    <Multiselect data={categories} setValue={setValue}/>
+    // <select value={selectedOption} onChange={handleSelectChange}>
+    //   <option key={0} value={0}>Select Category</option>
+
+    //   {categories.map((item) => (
+    //     <option key={item.id} value={item.id}>{ item.name }</option>
+    //   ))}
+    // </select>
   );
 }
 

@@ -4,7 +4,7 @@ import React from 'react';
 function Table({ data, headers, body }) {
   // Returns table component with headers and body integrated
   return (
-    <div>
+    <div className='table-container-body'>
       <table className='table'>
         <thead className='table-head'>
           <tr>

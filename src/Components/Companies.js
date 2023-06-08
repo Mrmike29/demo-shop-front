@@ -36,7 +36,7 @@ function Companies({ setValue }) {
     <select value={selectedOption} onChange={handleSelectChange}>
       <option key={0} value={0}>Select Company</option>
       {companies.map((item) => (
-        <option key={item.id} value={item.NIT}>{ item.name }</option>
+        <option key={item.NIT} value={item.NIT}>{ item.name }</option>
       ))}
     </select>
   );

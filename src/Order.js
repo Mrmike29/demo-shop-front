@@ -22,8 +22,8 @@ const OrderApp = ({ user }) => {
       fetch(`${API_URL}/getOrders${request}`).then((response) => {
   			response.json().then((jsonResponse) => {
           (jsonResponse.length > 0) ? 
-            setBody(jsonResponse.map((item) => (
-                <tr key={item.id}>
+            setBody(jsonResponse.map((item, key) => (
+                <tr key={item.id + '-' + key}>
                     <td>{item.number}</td>
                     <td>{item.email}</td>
                     <td>{item.product}</td>

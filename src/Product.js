@@ -27,7 +27,7 @@ const ProductApp = ({ user, reRender, setReRender }) => {
 
   // Create product data
   const [companyProd, setCompanyProd] = useState(0);
-  const [categoryProd, setCategoryProd] = useState(0);
+  const [categoryProd, setCategoryProd] = useState([]);
   const [nameProd, setNameProd] = useState('');
   const [descriptionProd, setDescriptionProd] = useState('');
   const [stockProd, setStockProd] = useState(1);
@@ -79,16 +79,27 @@ const ProductApp = ({ user, reRender, setReRender }) => {
     try {
       fetch(`${API_URL}/getProducts`).then((response) => {
   			response.json().then((jsonResponse) => {
-          (jsonResponse.length > 0) ? 
-          setBody(jsonResponse.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.category}</td>
-                <td>{item.description}</td>
-                <td>{item.company}</td>
-                <td>{item.price}</td>
-                <td>{item.currency}</td>
-                <td>{item.stock}</td>
+          const products = jsonResponse.data.products;
+          const categories = jsonResponse.data.categories;
+          
+          const prodElement = (products.length > 0) ? 
+            products.map((item) => {
+              let currentCat = ''
+
+              categories.map((cat) => {
+                if (cat.prod*1 === item.id*1) {
+                  currentCat += cat.category + ', '; 
+                }
+              })
+
+              return <tr key={item.id}>
+                <td>{ item.name }</td>
+                <td>{ currentCat.slice(0, -2) }</td>
+                <td>{ item.description }</td>
+                <td>{ item.company }</td>
+                <td>{ item.price }</td>
+                <td>{ item.currency }</td>
+                <td>{ item.stock }</td>
                 <td>
                   {
                     (
@@ -102,13 +113,13 @@ const ProductApp = ({ user, reRender, setReRender }) => {
                   }
                 </td>
               </tr>
-            )))
+            })
           : 
-          setBody(
             <tr>
               <td colSpan={headers.length}>No data</td>
             </tr>
-          )
+          
+          setBody(prodElement);
 				  setData(jsonResponse);
   			})
   		});
@@ -141,10 +152,36 @@ const ProductApp = ({ user, reRender, setReRender }) => {
       return
     }
 
-    if (categoryProd === 0) {
-      alert("Company is Required")
+    if (categoryProd.length === 0) {
+      alert("Category is Required")
       return
     }
+
+    if (nameProd.trim() === 0) {
+      alert("Name is Required")
+      return
+    }
+
+    if (descriptionProd.trim() === 0) {
+      alert("Description is Required")
+      return
+    }
+
+    if (stockProd < 100) {
+      alert("Stock not enough, must be at least 100")
+      return
+    }
+
+    if (priceProd === 0) {
+      alert("Price is Required")
+      return
+    }
+
+    const categoryJson = [];
+
+    categoryProd.forEach((i) => {
+      categoryJson.push({'id': i[0]})
+    })
 
     try {
 
@@ -152,7 +189,7 @@ const ProductApp = ({ user, reRender, setReRender }) => {
         method: 'post',
         body: JSON.stringify({
           'company': companyProd,
-          'category': categoryProd,
+          'category': categoryJson,
           'name': nameProd,
           'description': descriptionProd,
           'stock': stockProd,
@@ -221,14 +258,20 @@ const ProductApp = ({ user, reRender, setReRender }) => {
     try {
       fetch(`${API_URL}/getProducts?id=${id}`).then((response) => {
   			response.json().then((jsonResponse) => {
+          const products = jsonResponse.data.products[0];
+          const categories = jsonResponse.data.categories;
+          
+          let currentCat = '';
+          categories.map((cat) => { currentCat += cat.category + ', '; })
+
           setidCart(id);
-          setCompanyCart(jsonResponse[0].company);
-          setCategoryCart(jsonResponse[0].category);
-          setNameCart(jsonResponse[0].name);
-          setCurrencyCartTo(jsonResponse[0].currency);
-          setCurrencyCartFrom(jsonResponse[0].currency);
-          setPriceCartTo(jsonResponse[0].price);
-          setPriceCartFrom(jsonResponse[0].price);
+          setCompanyCart(products.company);
+          setCategoryCart(currentCat.slice(0, -2) );
+          setNameCart(products.name);
+          setCurrencyCartTo(products.currency);
+          setCurrencyCartFrom(products.currency);
+          setPriceCartTo(products.price);
+          setPriceCartFrom(products.price);
   			})
   		});
     } catch (error) {
